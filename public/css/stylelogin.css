@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(90deg, #b1b1b1, #000000);
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.logo img {
+  position: fixed;
+  width: 40%;
+  margin: 13% 0% 0% 5%;
+}
+
+.card-login, .card-register {
+  background: #d5d5d57a;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: fixed;
+  width: 400px;
+  max-width: 100%;
+  left: 60%;
+  margin-top: 10%;
+  transition: all 0.3s ease;
+}
+
+.card-register {
+  height: 450px;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  transition: all 0.2s 0.7s;
+  overflow: hidden;
+  width: 100%;
+}
+
+form.sign-up-form {
+  opacity: 0;
+  z-index: 1;
+}
+
+form.sign-in-form {
+  z-index: 2;
+}
+
+.title {
+  font-size: 2rem;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.input-field {
+  max-width: 300px;
+  width: 100%;
+  background-color: #f0f0f0;
+  margin: 10px 0;
+  height: 55px;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  padding: 0 0.4rem;
+  position: relative;
+}
+
+.input-field input {
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+.input-field:hover {
+  background-color: #e8e8e8;
+}
+
+.btn {
+  width: 200px;
+  background: linear-gradient(90deg, #000000, #525252);
+  border: none;
+  outline: none;
+  height: 55px;
+  border-radius: 45px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px;
+}
+
+@media (max-width: 1200px) {
+  .card-login, .card-register {
+    width: 350px;
+    left: 70%;
+    transform: translateX(-50%);
+  }
+  
+  .logo img {
+    width: 40%;
+    margin: 20% 0% 0% 5%;
+  }
+}
+
+@media (max-width:  768px) {
+  .card-login, .card-register {
+    width: 90%;
+    left: 5%;
+    transform: none;
+    margin-top: 30%;
+  }
+
+  .logo img {
+    width: 50%;
+    margin: 5% 0% 0% 25%;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-login, .card-register {
+    width: 90%;;
+    margin-top: 30%;
+  }
+  
+  .logo img {
+    width: 50%;
+    margin: 0% 0% 0% 25%;
+  }
+}
