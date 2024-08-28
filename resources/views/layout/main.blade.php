@@ -6,17 +6,42 @@
     <title>Manajemen Eventory</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .sidebar {
+            height: 100vh; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            z-index: 100; 
+            overflow-y: auto;
+        }
+        .content {
+            margin-left: 250px; 
+        }
+        @media (max-width: 767.98px) {
+            h1 {
+                font-size: 1.5rem; 
+            }
+            
+            label, th, td {
+                font-size: 0.875rem; 
+            }
+            
+            .btn {
+                font-size: 0.875rem; 
+            }
+        }
+    </style>
+
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body >
 
     @include('layout.nav')
-
-        <!-- Main Content -->
         <main class="col-lg-9 col-xl-10 ms-sm-auto px-md-4 mt-4">
             <aside id="colorlib-hero" class="js-fullheight">
                 <div class="flexslider js-fullheight">
-                    @yield('container') <!-- Konten akan dimuat di sini -->
+                    
+                    @yield('container') 
                 </div>
             </aside>
         </main>
@@ -24,7 +49,6 @@
 </div>
 
 <footer class="mt-auto">
-    <!-- Tambahkan konten footer di sini -->
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

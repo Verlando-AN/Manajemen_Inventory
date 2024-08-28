@@ -25,6 +25,17 @@
         </div>
 
         <div class="mb-3">
+            <label for="user_id" class="form-label">Pengguna</label>
+            <select name="user_id" id="user_id" class="form-select" required>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}" {{ $user->id == $barang->user_id ? 'selected' : '' }}>
+                        {{ $user->username }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
             <label for="barcode" class="form-label">Barcode</label>
             <input type="text" name="barcode" id="barcode" class="form-control" value="{{ $barang->barcode }}" required>
         </div>

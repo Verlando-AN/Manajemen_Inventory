@@ -30,8 +30,6 @@ class ReminderController extends Controller
 
         Reminder::create($request->all());
 
-        // Logika untuk mengirimkan pengingat ke WhatsApp dapat ditambahkan di sini
-
         return redirect()->route('reminder.index')->with('success', 'Reminder berhasil ditambahkan.');
     }
 

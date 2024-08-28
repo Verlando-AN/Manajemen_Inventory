@@ -8,23 +8,36 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PerbaikanController;
+use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\UserController;
 
-Route::get('/', function () {return view('auth.login.index');});
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/', function () {
+    return view('auth.login.index');
+});
+
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::get('/register', [RegisterController::class, 'index']);
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/home', function () {return view('home');});
+Route::get('/home', function () {
+    return view('home');
+})->middleware('auth');
 
 
-Route::resource('reminder', ReminderController::class);
 
-Route::resource('barang', BarangController::class);
-Route::resource('jenis_barang', JenisBarangController::class);
-Route::resource('laporan', LaporanController::class);
-Route::get('laporan/{id}', [LaporanController::class, 'show'])->name('laporan.show');
-Route::get('laporan/{laporan}', [LaporanController::class, 'show'])->name('laporan.show');
-Route::put('laporan/{laporan}', [LaporanController::class, 'updateStatus'])->name('laporan.update');
+Route::resource('laporan', LaporanController::class)->middleware('auth');
+Route::put('laporan/{laporan}/status', [LaporanController::class, 'updateStatus'])->name('laporan.updateStatus')->middleware('auth');
+Route::get('perbaikan', [PerbaikanController::class, 'index'])->name('perbaikan.index')->middleware('auth');
+Route::patch('perbaikan/{laporan}/status', [PerbaikanController::class, 'updateStatus'])->name('perbaikan.updateStatus')->middleware('auth');
+
+
+    Route::resource('reminder', ReminderController::class)->middleware('auth');
+    Route::resource('barang', BarangController::class)->middleware('auth');
+    Route::resource('jenis_barang', JenisBarangController::class)->middleware('auth');
+    Route::resource('users', UserController::class)->middleware('auth');
+
+    Route::post('/logout', [LoginController::class, 'logout']);
 

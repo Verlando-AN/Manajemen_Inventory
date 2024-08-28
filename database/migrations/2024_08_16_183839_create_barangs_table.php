@@ -11,6 +11,7 @@ class CreateBarangsTable extends Migration
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('jenis_barang_id')->constrained('jenis_barangs')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nama_barang');
             $table->string('barcode')->unique();
             $table->integer('stok')->default(0);

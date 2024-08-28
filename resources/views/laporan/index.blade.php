@@ -12,11 +12,43 @@
 
     <a href="{{ route('laporan.create') }}" class="btn btn-primary mb-4">Tambah Laporan</a>
 
+    <form action="{{ route('laporan.index') }}" method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="tanggal">Tanggal:</label>
+                <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ request('tanggal') }}">
+            </div>
+            <div class="col-md-4">
+                <label for="bulan">Bulan:</label>
+                <select name="bulan" id="bulan" class="form-control">
+                    <option value="">Semua Bulan</option>
+                    @for($i = 1; $i <= 12; $i++)
+                        <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>
+                            {{ \Carbon\Carbon::create()->month($i)->format('F') }}
+                        </option>
+                    @endfor
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="tahun">Tahun:</label>
+                <select name="tahun" id="tahun" class="form-control">
+                    <option value="">Semua Tahun</option>
+                    @for($i = \Carbon\Carbon::now()->year; $i >= 2000; $i--)
+                        <option value="{{ $i }}" {{ request('tahun') == $i ? 'selected' : '' }}>
+                            {{ $i }}
+                        </option>
+                    @endfor
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Filter</button>
+    </form>
+
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Barcode</th>
-                <th>Nama Laptop</th>
+                <th>Nama Barang</th>
                 <th>Jenis Kerusakan</th>
                 <th>Tanggal Laporan</th>
                 <th>Aksi</th>
@@ -25,22 +57,48 @@
         <tbody>
             @foreach($laporans as $laporan)
                 <tr>
-                    <td>{{ $laporan->barcode }}</td>
+                    <td>
+                        {!! DNS1D::getBarcodeSVG($laporan->barcode, 'C39', 1, 33) !!}
+                    </td>
                     <td>{{ $laporan->nama_laptop }}</td>
                     <td>{{ ucfirst($laporan->jenis_kerusakan) }}</td>
-                    <td>{{ $laporan->created_at->format('d-m-Y H:i') }}</td>
+                    <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
                     <td>
-                        <a href="{{ route('laporan.show', $laporan->id) }}" class="btn btn-info btn-sm">Detail</a>
-                        <a href="{{ route('laporan.edit', $laporan->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('laporan.destroy', $laporan->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus laporan ini?')">Hapus</button>
-                        </form>
+                        <div class="input-group mb-3">
+                            <a href="{{ route('laporan.edit', $laporan->id) }}" class="btn btn-info btn-sm">Detail</a>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split btn-info" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{{ route('laporan.edit', $laporan->id) }}">Edit</a></li>
+                              <li>
+                                <form action="{{ route('laporan.destroy', $laporan->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="dropdown-item" onclick="return confirm('Apakah Anda yakin ingin menghapus laporan ini?')">Hapus</button>
+                                </form>
+                              </li>
+                            </ul>
+                         </div>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+</nav>
+
 @endsection
