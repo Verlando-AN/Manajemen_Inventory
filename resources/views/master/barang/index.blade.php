@@ -39,46 +39,46 @@
         </div>
     </form>
 
-    <!-- Check View Option -->
-    @if(request('view') == 'card')
-        <!-- Card View -->
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            @foreach($barangs as $barang)
-                <div class="col mb-4">
-                    <div class="card" style="width: 18rem;">
+@if(request('view') == 'card')
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach($barangs as $barang)
+            <div class="col mb-4">
+                <div class="card" style="width: 18rem;">
+                    @if($barang->fotoBarangs->count() > 0)
+                        <img src="{{ Storage::url($barang->fotoBarangs->first()->path) }}" class="card-img-top" alt="{{ $barang->nama_barang }}" style="height: 180px; object-fit: cover;">
+                    @else
                         <img src="{{ Storage::url('public/image/barang.png') }}" class="card-img-top" alt="{{ $barang->nama_barang }}" style="height: 180px; object-fit: cover;">
-                        <div class="card-body">
-                            <h6 class="card-title">{{ $barang->nama_barang }}</h6>
-                            <p class="card-text mb-0">
-                                Jenis: {{ $barang->jenisBarang->nama_jenis }}<br>
-                               
-                                
-                                Pengguna: {{ $barang->user->username ?? 'Tidak Ada Pengguna' }}<br>
-                               Stok: {{ $barang->stok }}
-                               <br>
-                               <br>
-                          
-                               
-                               <div class="position-relative">
+                    @endif
+                    <div class="card-body">
+                        <h6 class="card-title">{{ $barang->nama_barang }}</h6>
+                        <p class="card-text mb-0">
+                            Jenis: {{ $barang->jenisBarang->nama_jenis }}<br>
+                            Pengguna: {{ $barang->user->username ?? 'Tidak Ada Pengguna' }}<br>
+                            Stok: {{ $barang->stok }}
+                            <br>
+                            <br>
+                            <br>
+                            <div class="position-relative">
                                 <div class="position-absolute bottom-0 end-0">
-                                {!! DNS1D::getBarcodeSVG($barang->barcode, 'C39', 1, 33) !!}
+                                    {!! DNS1D::getBarcodeSVG($barang->barcode, 'C39', 1, 33) !!}
+                                </div>
                             </div>
-                        </div>
-                            </p>
-                            <div class="d-flex justify-content-between mt-6">
-                                <a href="{{ route('barang.edit', $barang) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ route('barang.destroy', $barang) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                </form>
-                            </div>
+                        </p>
+                        <div class="d-flex justify-content-between mt-6">
+                            <a href="{{ route('barang.edit', $barang) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('barang.destroy', $barang) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-            @endforeach
-        </div>
-    @else
+            </div>
+        @endforeach
+    </div>
+@else
+
         <!-- Table View -->
         <div class="table-responsive shadow-sm rounded">
             <table class="table table-hover align-middle">

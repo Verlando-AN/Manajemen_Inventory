@@ -2,7 +2,6 @@
 
 @section('container')
 <div class="container mt-4">
-    <!-- Header Section -->
     <div class="text-center mb-4">
         <h1>Profile dan Barangmu</h1>
         @if (session('success'))
@@ -14,13 +13,16 @@
     </div>
 
     <div class="row">
-        <!-- Kolom Profil -->
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm border-light">
                 <div class="row g-0">
                     <div class="col-md-12">
-                        <img src="{{ Storage::url('public/image/profile.jpg') }}" class="img-fluid rounded-top" alt="Profile Image" style="height: 250px; object-fit: cover;">
-                    </div>
+                        @if (auth()->user()->photo)
+                      <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="User Image" class="img-fluid rounded-start" style="height: 200px; object-fit: cover;">
+                      @else
+                      <img src="{{ Storage::url('public/image/profile.jpg') }}" class="img-fluid rounded-top" alt="Profile Image" style="height: 250px; object-fit: cover;">
+                      @endif
+                     </div>
                     <div class="col-md-12">
                         <div class="card-body">
                             <h5 class="card-title">Profile</h5>
@@ -35,7 +37,6 @@
             </div>
         </div>
 
-        <!-- Kolom Barangmu dan Daftar Pengguna -->
         <div class="col-md-8 mb-4">
             <div class="card shadow-sm border-light">
                 <div class="card-body">

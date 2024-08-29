@@ -10,6 +10,7 @@ class CreateLaporansTable extends Migration
     {
         Schema::create('laporans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('barcode');
             $table->string('nama_laptop');
             $table->enum('jenis_kerusakan', ['normal', 'sedang', 'parah']);   

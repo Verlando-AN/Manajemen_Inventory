@@ -32,7 +32,7 @@ class AuthController extends Controller
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'password' => bcrypt($request->password), // Use bcrypt to hash the password
+            'password' => bcrypt($request->password), 
         ]);
 
         return response()->json(['user' => $user], 201);
@@ -46,7 +46,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        // Validation
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
@@ -56,15 +55,12 @@ class AuthController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
 
-        // Attempt to authenticate the user
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Authentication successful
             $user = Auth::user();
             $token = $user->createToken('authToken')->accessToken;
 
             return response()->json(['user' => $user, 'access_token' => $token], 200);
         } else {
-            // Authentication failed
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
     }

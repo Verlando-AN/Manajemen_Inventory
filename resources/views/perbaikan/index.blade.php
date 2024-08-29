@@ -4,6 +4,9 @@
 <div class="container mt-4">
     <h1 class="mb-4 text-center">Progres Perbaikan</h1>
 
+        <a href="{{ route('laporan.create') }}" class="btn btn-primary mb-4">Tambah Laporan</a>
+
+
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead class="table-dark">
@@ -24,7 +27,7 @@
                         <td>{{ $laporan->nama_laptop }}</td>
                         <td>{{ ucfirst($laporan->status->status ?? $laporan->status) }}</td>
                         <td>
-                            @if($laporan->status_id === 2)  <!-- Status 4 dianggap sebagai 'disetujui' -->
+                            @if($laporan->status_id === 2)  
                                 {{ $laporan->estimasi_selesai ? \Carbon\Carbon::parse($laporan->estimasi_selesai)->format('d-m-Y') : '-' }}
                             @else
                                 -
@@ -32,7 +35,6 @@
                         </td>
                         <td>
                             <div class="d-grid gap-2 d-md-block">
-                                <!-- Tombol Generate hanya bisa diklik jika status_id = 2 -->
                                 <button 
                                     class="btn btn-primary {{ $laporan->status_id == 2 ? '' : 'disabled' }}" 
                                     type="button"
@@ -40,7 +42,6 @@
                                 >
                                     Generate
                                 </button>
-                                <!-- Tombol Accept hanya bisa diklik jika status_id = 4 -->
                                 <button 
                                     class="btn btn-success {{ $laporan->status_id == 4 ? '' : 'disabled' }}" 
                                     type="button"

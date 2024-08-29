@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <h1 class="mb-4">Edit Barang</h1>
 
-    <form action="{{ route('barang.update', $barang->id) }}" method="POST">
+    <form action="{{ route('barang.update', $barang->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -48,6 +48,24 @@
         <div class="mb-3">
             <label for="deskripsi" class="form-label">Deskripsi</label>
             <textarea name="deskripsi" id="deskripsi" class="form-control" rows="3">{{ $barang->deskripsi }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="foto_barang" class="form-label">Foto Barang</label>
+            <input type="file" name="foto_barang[]" id="foto_barang" class="form-control" multiple>
+            <small class="form-text text-muted">Pilih satu atau lebih gambar untuk diunggah.</small>
+            @if($barang->fotoBarangs->count())
+                <div class="mt-2">
+                    <h5>Foto Saat Ini:</h5>
+                    <div class="row">
+                        @foreach($barang->fotoBarangs as $foto)
+                            <div class="col-md-3 mb-2">
+                                <img src="{{ asset('storage/' . $foto->path) }}" class="img-thumbnail" alt="Foto Barang">
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
 
         <div class="d-flex justify-content-between">

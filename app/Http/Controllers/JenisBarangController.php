@@ -3,18 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\JenisBarang;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class JenisBarangController extends Controller
 {
     public function index()
     {
+        if (Auth::check() && Auth::user()->role !== 'admin') {
+            return redirect('/')->with('error', 'Anda tidak memiliki akses ke bagian ini.');
+        }
+
         $jenisBarangs = JenisBarang::all();
         return view('master.jenis_barang.index', compact('jenisBarangs'));
     }
 
     public function create()
     {
+        if (Auth::check() && Auth::user()->role !== 'admin') {
+            return redirect('/')->with('error', 'Anda tidak memiliki akses ke bagian ini.');
+        }
         return view('master.jenis_barang.create');
     }
 
@@ -30,6 +39,9 @@ class JenisBarangController extends Controller
 
     public function edit(JenisBarang $jenisBarang)
     {
+        if (Auth::check() && Auth::user()->role !== 'admin') {
+            return redirect('/')->with('error', 'Anda tidak memiliki akses ke bagian ini.');
+        }
         return view('master.jenis_barang.edit', compact('jenisBarang'));
     }
 
@@ -45,6 +57,10 @@ class JenisBarangController extends Controller
 
     public function destroy(JenisBarang $jenisBarang)
     {
+        if (Auth::check() && Auth::user()->role !== 'admin') {
+            return redirect('/')->with('error', 'Anda tidak memiliki akses ke bagian ini.');
+        }
+
         $jenisBarang->delete();
         return redirect()->route('jenis_barang.index')->with('success', 'Jenis barang berhasil dihapus.');
     }

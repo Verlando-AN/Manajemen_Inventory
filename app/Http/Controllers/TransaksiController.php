@@ -32,11 +32,10 @@ class TransaksiController extends Controller
 
         $transaksi = Transaksi::create($request->all());
 
-        // Generate perbaikan jika kondisi tertentu terpenuhi
         if ($request->jenis_transaksi == 'keluar') {
             Perbaikan::create([
                 'transaksi_id' => $transaksi->id,
-                'tanggal_perbaikan' => now()->addDays(7), // contoh: estimasi perbaikan 7 hari dari transaksi
+                'tanggal_perbaikan' => now()->addDays(7), 
                 'keterangan_perbaikan' => 'Perbaikan otomatis dari transaksi keluar',
                 'status' => 'pending',
             ]);

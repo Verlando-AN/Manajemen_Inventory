@@ -18,10 +18,18 @@ class CreateBarangsTable extends Migration
             $table->text('deskripsi')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('foto_barangs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('barang_id')->constrained('barangs')->onDelete('cascade');
+            $table->string('path'); 
+            $table->timestamps();
+        });
     }
 
     public function down()
     {
+        Schema::dropIfExists('foto_barangs');
         Schema::dropIfExists('barangs');
     }
 }

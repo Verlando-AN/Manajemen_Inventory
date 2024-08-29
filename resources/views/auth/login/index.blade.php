@@ -14,6 +14,22 @@
     <div class="forms-container">
       <div class="signin-signup">
         <form action="/login" method="post" class="sign-in-form">
+          @if(session('success'))
+            <div class="alert alert-success alert-dismissible">
+               {{ session('success') }}
+                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          @endif  
+            @if($errors->any())
+              <div class="alert alert-error alert-dismissible">
+                <ul>
+                  @foreach($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            @endif       
           @csrf
           <h2 class="title">Sign in</h2>
           <div class="input-field">

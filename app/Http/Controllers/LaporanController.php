@@ -10,17 +10,25 @@ use Illuminate\Http\Request;
 use Twilio\Rest\Client;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
 {
     public function index(Request $request)
     {
+        // Hanya admin yang dapat mengakses halaman index
+        if (Auth::user()->role !== 'admin') {
+            return redirect('/')->with('error', 'Anda tidak memiliki akses ke bagian ini.');
+        }
+    
         $query = Laporan::query();
 
+        // Filter berdasarkan tanggal jika ada
         if ($request->filled('tanggal')) {
             $query->whereDate('created_at', $request->input('tanggal'));
         }
 
+        // Filter berdasarkan bulan dan tahun jika ada
         if ($request->filled('bulan')) {
             $bulan = $request->input('bulan');
             $tahun = $request->filled('tahun') ? $request->input('tahun') : date('Y');
@@ -63,6 +71,7 @@ class LaporanController extends Controller
             'jenis_kerusakan' => $request->jenis_kerusakan,
             'deskripsi' => $request->deskripsi,
             'status_id' => 1, 
+            'user_id' => Auth::id(), // Simpan ID user yang membuat laporan
         ]);
 
         if ($request->hasFile('foto_kerusakan')) {
@@ -77,7 +86,7 @@ class LaporanController extends Controller
 
         $this->sendWhatsAppNotification($laporan);
 
-        return redirect()->route('laporan.index')->with('success', 'Laporan berhasil ditambahkan.');
+        return redirect()->route('laporan.create')->with('success', 'Laporan berhasil ditambahkan.');
     }
 
     private function sendWhatsAppNotification($laporan)
@@ -116,6 +125,11 @@ class LaporanController extends Controller
 
     public function update(Request $request, Laporan $laporan)
     {
+        // Cek apakah user adalah pemilik laporan atau admin
+        if (Auth::user()->role !== 'admin' && $laporan->user_id !== Auth::id()) {
+            return redirect()->route('laporan.index')->withErrors(['error' => 'Anda tidak memiliki izin untuk memperbarui laporan ini.']);
+        }
+
         $request->validate([
             'status_id' => 'required|integer|exists:statuss,id',
             'estimasi_selesai' => 'nullable|date',
@@ -126,8 +140,6 @@ class LaporanController extends Controller
         if ($data['estimasi_selesai']) {
             $data['estimasi_selesai'] = Carbon::parse($data['estimasi_selesai'])->format('Y-m-d');
         }
-
-        Log::info('Update Data:', $data);
 
         $laporan->update($data);
 
@@ -146,6 +158,11 @@ class LaporanController extends Controller
 
     public function destroy(Laporan $laporan)
     {
+        // Cek apakah user adalah pemilik laporan atau admin
+        if (Auth::user()->role !== 'admin' && $laporan->user_id !== Auth::id()) {
+            return redirect()->route('laporan.index')->withErrors(['error' => 'Anda tidak memiliki izin untuk menghapus laporan ini.']);
+        }
+
         $laporan->fotoKerusakans()->delete();
         $laporan->delete();
         return redirect()->route('laporan.index')->with('success', 'Laporan berhasil dihapus.');

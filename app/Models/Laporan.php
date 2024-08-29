@@ -16,6 +16,7 @@ class Laporan extends Model
         'deskripsi',
         'status_id',
         'estimasi_selesai',
+        'user_id',
     ];
 
     public function fotoKerusakans()
@@ -30,5 +31,9 @@ class Laporan extends Model
     public function barang()
     {
         return $this->belongsTo(Barang::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

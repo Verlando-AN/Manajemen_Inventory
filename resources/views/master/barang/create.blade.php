@@ -6,7 +6,7 @@
 
     <div class="card shadow-lg border-light">
         <div class="card-body">
-            <form action="{{ route('barang.store') }}" method="POST">
+            <form action="{{ route('barang.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="row mb-4">
@@ -57,6 +57,14 @@
                     <div class="col-md-6">
                         <label for="deskripsi" class="form-label">Deskripsi</label>
                         <textarea name="deskripsi" id="deskripsi" class="form-control form-control-lg" rows="4" placeholder="Masukkan deskripsi barang"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <label for="foto_barang" class="form-label">Foto Barang</label>
+                        <input type="file" name="foto_barang[]" id="foto_barang" class="form-control form-control-lg" multiple>
+                        <small class="form-text text-muted">Pilih satu atau lebih gambar untuk diunggah.</small>
                     </div>
                 </div>
 

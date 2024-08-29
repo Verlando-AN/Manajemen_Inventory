@@ -11,12 +11,14 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href='{{ route('users.index') }}'>Profil</a>
                     </li>
+                    @if(auth()->user()->role === 'admin')
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('laporan.index') }}">Laporan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('barang.index') }}">Barang</a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('perbaikan.index') }}">Perbaikan</a>
                     </li>
@@ -49,12 +51,14 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href='{{ route('users.index') }}'>Profil</a>
                             </li>
+                            @if(auth()->user()->role === 'admin')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('laporan.index') }}">Laporan</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('barang.index') }}">Barang</a>
                             </li>
+                            @endif
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('perbaikan.index') }}">Perbaikan</a>
                             </li>
