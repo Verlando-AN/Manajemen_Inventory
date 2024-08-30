@@ -65,7 +65,8 @@
                     <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
                     <td>
                         <div class="input-group mb-3">
-                            <a href="{{ route('laporan.edit', $laporan->id) }}" class="btn btn-info btn-sm">Detail</a>
+                            <a href="{{ route('laporan.show', $laporan->id) }}" class="btn btn-primary btn-sm">Lihat</a>
+                            <a href="{{ route('laporan.edit', $laporan->id) }}" class="btn btn-info btn-sm">Edit</a>
                             <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split btn-info" data-bs-toggle="dropdown" aria-expanded="false">
                               <span class="visually-hidden">Toggle Dropdown</span>
                             </button>

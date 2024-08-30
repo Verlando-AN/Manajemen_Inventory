@@ -163,4 +163,10 @@ class LaporanController extends Controller
         return redirect()->route('laporan.index')->with('success', 'Laporan berhasil dihapus.');
     }
 
+    // Tambahkan method show
+    public function show(Laporan $laporan)
+    {
+        $fotoKerusakans = $laporan->fotoKerusakans; // Ambil foto-foto kerusakan terkait
+        return view('laporan.show', compact('laporan', 'fotoKerusakans'));
+    }
 }

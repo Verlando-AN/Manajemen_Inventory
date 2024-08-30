@@ -23,7 +23,11 @@
                         <td>
                             {!! DNS1D::getBarcodeSVG($laporan->barcode, 'C39', 1, 33) !!}
                         </td>
-                        <td>{{ $laporan->nama_laptop }}</td>
+                        <td>
+                            <a href="{{ route('laporan.show', $laporan->id) }}" class="text-decoration-none">
+                                {{ $laporan->nama_laptop }}
+                            </a>
+                        </td>
                         <td>{{ ucfirst($laporan->status->status ?? $laporan->status) }}</td>
                         <td>
                             @if($laporan->status_id === 2)  
@@ -73,7 +77,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Silakan Menunggu atau Mengantar Langsung Barang Anda ke Tim Repair</p>
+        <p id="modalMessage">Silakan Menunggu atau Mengantar Langsung Barang Anda ke Tim Repair</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
