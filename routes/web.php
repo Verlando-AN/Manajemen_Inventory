@@ -41,3 +41,4 @@ Route::patch('perbaikan/{laporan}/status', [PerbaikanController::class, 'updateS
 
     Route::post('/logout', [LoginController::class, 'logout']);
 
+    Route::post('/laporan/{id}/update-status', [LaporanController::class, 'updateStatus'])->name('laporan.update-status');

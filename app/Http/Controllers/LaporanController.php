@@ -16,19 +16,16 @@ class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-        // Hanya admin yang dapat mengakses halaman index
         if (Auth::user()->role !== 'admin') {
             return redirect('/')->with('error', 'Anda tidak memiliki akses ke bagian ini.');
         }
     
         $query = Laporan::query();
 
-        // Filter berdasarkan tanggal jika ada
         if ($request->filled('tanggal')) {
             $query->whereDate('created_at', $request->input('tanggal'));
         }
 
-        // Filter berdasarkan bulan dan tahun jika ada
         if ($request->filled('bulan')) {
             $bulan = $request->input('bulan');
             $tahun = $request->filled('tahun') ? $request->input('tahun') : date('Y');
@@ -71,7 +68,7 @@ class LaporanController extends Controller
             'jenis_kerusakan' => $request->jenis_kerusakan,
             'deskripsi' => $request->deskripsi,
             'status_id' => 1, 
-            'user_id' => Auth::id(), // Simpan ID user yang membuat laporan
+            'user_id' => Auth::id(), 
         ]);
 
         if ($request->hasFile('foto_kerusakan')) {
@@ -125,7 +122,6 @@ class LaporanController extends Controller
 
     public function update(Request $request, Laporan $laporan)
     {
-        // Cek apakah user adalah pemilik laporan atau admin
         if (Auth::user()->role !== 'admin' && $laporan->user_id !== Auth::id()) {
             return redirect()->route('laporan.index')->withErrors(['error' => 'Anda tidak memiliki izin untuk memperbarui laporan ini.']);
         }
@@ -158,7 +154,6 @@ class LaporanController extends Controller
 
     public function destroy(Laporan $laporan)
     {
-        // Cek apakah user adalah pemilik laporan atau admin
         if (Auth::user()->role !== 'admin' && $laporan->user_id !== Auth::id()) {
             return redirect()->route('laporan.index')->withErrors(['error' => 'Anda tidak memiliki izin untuk menghapus laporan ini.']);
         }
@@ -167,4 +162,5 @@ class LaporanController extends Controller
         $laporan->delete();
         return redirect()->route('laporan.index')->with('success', 'Laporan berhasil dihapus.');
     }
+
 }

@@ -18,17 +18,17 @@
                 <div class="row g-0">
                     <div class="col-md-12">
                         @if (auth()->user()->photo)
-                      <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="User Image" class="img-fluid rounded-start" style="height: 200px; object-fit: cover;">
-                      @else
-                      <img src="{{ Storage::url('public/image/profile.jpg') }}" class="img-fluid rounded-top" alt="Profile Image" style="height: 250px; object-fit: cover;">
-                      @endif
-                     </div>
+                            <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="User Image" class="img-fluid rounded-start" style="height: 200px; object-fit: cover;">
+                        @else
+                            <img src="{{ Storage::url('public/image/profile.jpg') }}" alt="Profile Image" class="img-fluid rounded-top" style="height: 250px; object-fit: cover;">
+                        @endif
+                    </div>
                     <div class="col-md-12">
                         <div class="card-body">
                             <h5 class="card-title">Profile</h5>
-                            <p class="card-text"><strong>Username:</strong> {{ Auth::user()->username }}</p>
-                            <p class="card-text"><strong>Email:</strong> {{ Auth::user()->email }}</p>
-                            <a href="{{ route('users.edit', Auth::user()->id) }}" class="btn btn-outline-warning btn-sm">
+                            <p class="card-text"><strong>Username:</strong> {{ auth()->user()->username }}</p>
+                            <p class="card-text"><strong>Email:</strong> {{ auth()->user()->email }}</p>
+                            <a href="{{ route('users.edit', auth()->user()->id) }}" class="btn btn-outline-warning btn-sm">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
                         </div>
@@ -54,27 +54,28 @@
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                @foreach($barangs->take(2) as $barang)
-                                    <tr>
-                                        <td>{{ $barang->nama_barang }}</td>
-                                        <td>{{ $barang->jenisBarang->nama_jenis }}</td>
-                                        <td>{!! DNS1D::getBarcodeSVG($barang->barcode, 'C39', 1, 33) !!}</td>
-                                        <td>{{ $barang->stok }}</td>
-                                        <td>{{ $barang->user->username ?? 'Tidak Ada Pengguna' }}</td>
-                                        <td>
-                                            <a href="{{ route('barang.edit', $barang->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
-                                            <form action="{{ route('barang.destroy', $barang->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus barang ini?')">Hapus</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
+                              @foreach($barangs->where('user_id', auth()->user()->id) as $barang)
+                                  <tr>
+                                      <td>{{ $barang->nama_barang }}</td>
+                                      <td>{{ $barang->jenisBarang->nama_jenis }}</td>
+                                      <td>{!! DNS1D::getBarcodeSVG($barang->barcode, 'C39', 1, 33) !!}</td>
+                                      <td>{{ $barang->stok }}</td>
+                                      <td>{{ $barang->user->username ?? 'Tidak Ada Pengguna' }}</td>
+                                      <td>
+                                          <a href="{{ route('barang.edit', $barang->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                                          <form action="{{ route('barang.destroy', $barang->id) }}" method="POST" style="display:inline;">
+                                              @csrf
+                                              @method('DELETE')
+                                              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus barang ini?')">Hapus</button>
+                                          </form>
+                                      </td>
+                                  </tr>
+                              @endforeach
+                          </tbody>
                         </table>
                     </div>
                     
+                    @if(auth()->user()->role === 'admin')
                     <h5 class="card-title mt-4">Daftar Pengguna</h5>
                     <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
                         <table class="table table-striped table-hover table-bordered">
@@ -111,6 +112,7 @@
                             </tbody>
                         </table>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

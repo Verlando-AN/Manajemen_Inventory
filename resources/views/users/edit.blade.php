@@ -7,7 +7,7 @@
     <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        
+
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" class="form-control" value="{{ old('username', $user->username) }}" required>
@@ -24,13 +24,12 @@
             @enderror
         </div>
 
+      
+
         <div class="form-group">
-            <label for="role">Role</label>
-            <select id="role" name="role" class="form-control" required>
-                <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
-                <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User</option>
-            </select>
-            @error('role')
+            <label for="password">Password Baru (kosongkan jika tidak diubah)</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Masukkan password baru (minimal 8 karakter)">
+            @error('password')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>

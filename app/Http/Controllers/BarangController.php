@@ -129,7 +129,16 @@ class BarangController extends Controller
 
         return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui.');
     }
-
+    public function show(Barang $barang)
+    {
+       
+        $jenisBarangs = JenisBarang::all();
+        $users = User::all();
+        $fotoBarangs = $barang->fotoBarangs; 
+    
+        return view('master.barang.show', compact('barang', 'jenisBarangs', 'users', 'fotoBarangs'));
+    }
+    
     public function destroy(Barang $barang)
     {
         if (Auth::check() && Auth::user()->role !== 'admin') {

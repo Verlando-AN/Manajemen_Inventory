@@ -70,7 +70,6 @@
                               <span class="visually-hidden">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="{{ route('laporan.edit', $laporan->id) }}">Edit</a></li>
                               <li>
                                 <form action="{{ route('laporan.destroy', $laporan->id) }}" method="POST">
                                     @csrf

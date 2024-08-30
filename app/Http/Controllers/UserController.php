@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index()
     {
         $users = User::all(); 
-        
         $barangs = Barang::with('jenisBarang', 'user')->get();
 
         return view('users.index', compact('barangs', 'users'));
@@ -25,28 +26,45 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        // Validasi data dari request
         $request->validate([
             'username' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'role' => 'required|in:admin,user',
+            'password' => 'nullable|min:8|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        // Proses upload foto jika ada
         if ($request->hasFile('photo')) {
+            // Hapus foto lama jika ada
             if ($user->photo) {
                 Storage::disk('public')->delete($user->photo);
             }
 
+            // Simpan foto baru dan update path-nya
             $photoPath = $request->file('photo')->store('profile-photos', 'public');
             $user->photo = $photoPath; 
         }
-        $user->update($request->only('username', 'email', 'role'));
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        // Ambil data lainnya dari request
+        $userData = $request->only('username', 'email');
+        
+        // Update password jika diisi
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->input('password'));
+        }
+
+        $user->update($userData);
+        return redirect()->route('users.index')->with('success', 'Pengguna berhasil diperbarui.');
     }
 
     public function destroy(User $user)
     {
+        if (Auth::user()->cannot('delete', $user)) {
+            return redirect()->route('users.index')->with('error', 'Anda tidak memiliki izin untuk menghapus pengguna ini.');
+        }
+
+        // Hapus foto jika ada
         if ($user->photo) {
             Storage::disk('public')->delete($user->photo);
         }
