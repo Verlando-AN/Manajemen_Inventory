@@ -169,4 +169,14 @@ class LaporanController extends Controller
         $fotoKerusakans = $laporan->fotoKerusakans; // Ambil foto-foto kerusakan terkait
         return view('laporan.show', compact('laporan', 'fotoKerusakans'));
     }
+        public function showHome()
+    {
+        $jumlahLaporan = Laporan::count();
+        $laporanTerbaru = Laporan::latest()->first();
+        $aktivitasTerakhir = Laporan::latest()->first();
+
+    // Mengirim data ke view 'home'
+    return view('home', compact('jumlahLaporan', 'laporanTerbaru', 'aktivitasTerakhir'));
+    }
+
 }

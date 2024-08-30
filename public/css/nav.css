@@ -1,0 +1,70 @@
+/* Sidebar Styles */
+.sidebar {
+    padding: 20px;
+    background-color: #343a40;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Profile Section Styles */
+.profile-section {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    background-color: #49505756;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.profile-picture {
+    width: 80px; /* Ukuran gambar profil lebih kecil agar seimbang dengan teks */
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid #fff; /* Border putih di sekitar gambar */
+}
+
+.profile-name {
+    margin: 0;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    flex: 1; /* Membuat elemen teks fleksibel */
+    min-width: 0; /* Pastikan elemen tidak melebihi batas */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.profile-role {
+    margin: 0;
+    color: #ddd; /* Warna teks peran yang lebih cerah */
+    font-size: 14px;
+}
+
+/* Navigation Link Styles */
+.nav .nav-link {
+    color: #ddd;
+    padding: 15px 20px;
+    font-size: 16px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.nav .nav-link:hover,
+.nav .nav-link.active {
+    color: #fff;
+    background-color: #495057;
+    border-radius: 8px;
+}
+
+/* Extra Spacing Between Sections */
+.nav + .nav {
+    margin-top: 20px;
+}
