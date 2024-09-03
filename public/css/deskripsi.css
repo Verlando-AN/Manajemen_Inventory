@@ -1,0 +1,191 @@
+/* CSS untuk halaman deskripsi barang */
+.heading {
+    font-family: 'Poppins', sans-serif; /* Mengubah font heading */
+    font-weight: 600; /* Menambahkan ketebalan font */
+    color: #333; /* Warna teks heading */
+    font-size: 2.75rem; /* Ukuran font heading */
+    display: inline-block; /* Agar garis memanjang sesuai dengan panjang teks */
+    padding-bottom: 0.5rem; /* Jarak bawah teks ke garis */
+    border-bottom: 4px solid #0b105e; /* Menambahkan garis di bawah heading */
+    position: relative; /* Agar garis tambahan dapat diposisikan dengan benar */
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    border-radius: 10px;
+    border: none;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 2.5rem; /* Ukuran font yang lebih besar untuk judul */
+    margin-bottom: 15px; /* Mengurangi jarak bawah judul */
+}
+
+.card-text {
+    font-size: 1.2rem; /* Ukuran font yang sedikit lebih besar untuk teks */
+    margin-bottom: 12px; /* Mengurangi jarak bawah teks */
+}
+
+.card-text strong {
+    font-weight: 700; /* Menambah ketebalan teks tebal */
+}
+
+.row {
+    margin-top: 20px;
+}
+
+.col-md-4 {
+    padding: 10px;
+}
+
+.card-img-top {
+    border-radius: 10px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* CSS tambahan untuk memperbesar foto dan memperbaiki tampilan */
+.profile-container {
+    display: flex;
+    align-items: flex-start; /* Menyelaraskan foto dan deskripsi secara vertikal di bagian atas */
+    gap: 30px; /* Jarak antara foto dan deskripsi */
+    margin-top: 20px; /* Jarak dari elemen sebelumnya */
+}
+
+.profile-photo {
+    flex-shrink: 0; /* Mencegah foto mengecil */
+}
+
+/* CSS untuk halaman deskripsi barang */
+.heading {
+    font-family: 'Poppins', sans-serif; /* Mengubah font heading */
+    font-weight: 600; /* Menambahkan ketebalan font */
+    color: #333; /* Warna teks heading */
+    font-size: 2.75rem; /* Ukuran font heading */
+    display: inline-block; /* Agar garis memanjang sesuai dengan panjang teks */
+    padding-bottom: 0.5rem; /* Jarak bawah teks ke garis */
+    border-bottom: 4px solid #0b105e; /* Menambahkan garis di bawah heading */
+    position: relative; /* Agar garis tambahan dapat diposisikan dengan benar */
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    border-radius: 10px;
+    border: none;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 2.5rem; /* Ukuran font yang lebih besar untuk judul */
+    margin-bottom: 15px; /* Mengurangi jarak bawah judul */
+}
+
+.card-text {
+    font-size: 1.2rem; /* Ukuran font yang sedikit lebih besar untuk teks */
+    margin-bottom: 12px; /* Mengurangi jarak bawah teks */
+}
+
+.card-text strong {
+    font-weight: 700; /* Menambah ketebalan teks tebal */
+}
+
+.row {
+    margin-top: 20px;
+}
+
+.col-md-4 {
+    padding: 10px;
+}
+
+.card-img-top {
+    border-radius: 10px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* CSS tambahan untuk memperbesar foto dan memperbaiki tampilan */
+.profile-container {
+    display: flex;
+    align-items: flex-start; /* Menyelaraskan foto dan deskripsi secara vertikal di bagian atas */
+    gap: 30px; /* Jarak antara foto dan deskripsi */
+    margin-top: 20px; /* Jarak dari elemen sebelumnya */
+}
+
+.profile-photo {
+    flex-shrink: 0; /* Mencegah foto mengecil */
+}
+
+.profile-photo img {
+    width: 300px; /* Ukuran foto yang lebih besar */
+    height: auto;
+    border-radius: 10px; /* Menambahkan sudut melengkung */
+    object-fit: cover; /* Memastikan foto tidak terdistorsi */
+}
+
+.profile-details {
+    flex: 1; /* Mengizinkan deskripsi untuk mengambil sisa ruang yang ada */
+    padding: 20px; /* Menambahkan padding di sekitar deskripsi */
+}
+
+
+.profile-details {
+    flex: 1; /* Mengizinkan deskripsi untuk mengambil sisa ruang yang ada */
+    padding: 20px; /* Menambahkan padding di sekitar deskripsi */
+}

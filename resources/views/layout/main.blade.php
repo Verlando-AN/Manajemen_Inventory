@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background-color: #e9ecef; /* Warna latar belakang yang Anda inginkan */
+        }
+    
+        /* CSS lainnya */
         .sidebar {
             height: 100vh; 
             position: fixed; 
@@ -22,16 +27,17 @@
             h1 {
                 font-size: 1.5rem; 
             }
-            
+    
             label, th, td {
                 font-size: 0.875rem; 
             }
-            
+    
             .btn {
                 font-size: 0.875rem; 
             }
         }
     </style>
+    
 
 </head>
 <body >
