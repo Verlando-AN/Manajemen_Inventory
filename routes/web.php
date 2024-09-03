@@ -26,6 +26,7 @@ Route::get('/home', function () {
     return view('home');
 })->middleware('auth');
 
+Route::get('/home', [LaporanController::class, 'showHome'])->name('home')->middleware('auth');
 
 
 Route::resource('laporan', LaporanController::class)->middleware('auth');
