@@ -101,11 +101,12 @@ class BarangController extends Controller
             'user_id' => 'required|integer',
             'barcode' => 'required|string|max:255|unique:barangs,barcode,' . $barang->id,
             'stok' => 'required|integer',
+            'deskripsi' => 'nullable|string',
             'foto_barang.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'foto_barang_to_delete.*' => 'integer'
         ]);
 
-        $barang->update($request->only('jenis_barang_id', 'nama_barang', 'user_id', 'barcode', 'stok'));
+        $barang->update($request->only('jenis_barang_id', 'nama_barang', 'user_id', 'barcode', 'stok','deskripsi'));
 
         if ($request->has('foto_barang_to_delete')) {
             foreach ($request->input('foto_barang_to_delete') as $fotoId) {
