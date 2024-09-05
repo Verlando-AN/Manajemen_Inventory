@@ -99,7 +99,7 @@
 
 /* Warna tombol .butond */
 .butond {
-    background-color: rgb(5, 10, 71);
+    background-color: rgb(255, 255, 255);
     color: #020202;
     border: 2px solid #020202; /* Menambahkan border pada tombol */
 }

@@ -9,6 +9,7 @@
 }
 
 /* Profile Section Styles */
+/* Profile Section Styles */
 .profile-section {
     margin-bottom: 40px;
     display: flex;
@@ -16,11 +17,23 @@
     background-color: #49505756;
     padding: 15px;
     border-radius: 10px;
-    width: 100%;
+    width: 100%; /* Ensure full width */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+    overflow: hidden; /* Prevent overflow */
 }
 
-
+.profile-section {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: flex-start; /* Mengatur elemen untuk menyelaraskan ke atas */
+    background-color: #49505756;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Menyembunyikan overflow yang tidak diinginkan */
+}
 
 .profile-picture {
     width: 80px; /* Ukuran gambar profil lebih kecil agar seimbang dengan teks */
@@ -36,12 +49,10 @@
     color: #fff;
     font-weight: bold;
     font-size: 18px;
-    flex: 1; /* Membuat elemen teks fleksibel */
-    min-width: 0; /* Pastikan elemen tidak melebihi batas */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal; /* Izinkan teks membungkus ke baris berikutnya */
+    word-wrap: break-word; /* Memecah kata yang terlalu panjang */
 }
+
 .profile-role {
     margin: 0;
     color: #ddd; /* Warna teks peran yang lebih cerah */
