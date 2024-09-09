@@ -23,10 +23,10 @@
                     </li>
                     @if(auth()->user()->role === 'admin')
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('laporan.index') }}">Laporan</a>
+                        <a class="nav-link text-white" href="{{ route('barang.index') }}">Barang</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('barang.index') }}">Barang</a>
+                        <a class="nav-link text-white" href="{{ route('laporan.index') }}">Laporan</a>
                     </li>
                     @endif
                     <li class="nav-item">
@@ -58,7 +58,7 @@
                         <!-- Profile Section -->
                         <div class="profile-section d-flex align-items-center p-3">
                             <!-- Gambar Profil -->
-                            <img src="{{ Auth::user()->profile_picture ? Storage::url(Auth::user()->profile_picture) : asset('img/default-profile.png') }}" alt="Profile Picture" class="profile-picture me-3">
+                            <img src="{{ Auth::user()->photo ? Storage::url(Auth::user()->photo) : asset('img/default-profile.png') }}" alt="Profile Picture" class="profile-picture me-3">
                             <div>
                                 <h5 class="profile-name">{{ Auth::user()->username }}</h5>
                                 <p class="profile-role">{{ Auth::user()->role }}</p>
@@ -70,11 +70,11 @@
                                 <a class="nav-link text-white" href="{{ route('home') }}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('laporan.index') }}">Laporan</a>
+                                <a class="nav-link text-white" href="{{ route('barang.index') }}">Barang</a>
                             </li>
                             @if(auth()->user()->role === 'admin')
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('barang.index') }}">Barang</a>
+                                <a class="nav-link text-white" href="{{ route('laporan.index') }}">Laporan</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('perbaikan.index') }}">Perbaikan</a>

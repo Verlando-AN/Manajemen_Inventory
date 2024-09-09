@@ -1,4 +1,3 @@
-
 @extends('layout.main')
 
 @section('container')
@@ -16,15 +15,15 @@
     <!-- View Toggle Buttons -->
     <div class="mb-4 d-flex justify-content-between align-items-center">
         <div>
-            <a href="{{ route('barang.index', ['view' => 'table']) }}" class="btn btn-info btn-sm {{ request('view') == 'table' ? 'active' : '' }}">Tampilan Tabel</a>
-            <a href="{{ route('barang.index', ['view' => 'card']) }}" class="btn btn-info btn-sm {{ request('view') == 'card' ? 'active' : '' }}">Tampilan Card</a>
+            <a href="{{ route('barang.index', ['view' => 'table']) }}" class="btn btn-primary mb-4 btn-filter {{ request('view') == 'table' ? 'active' : '' }}">Tampilan Tabel</a>
+            <a href="{{ route('barang.index', ['view' => 'card']) }}" class="btn btn-primary mb-4 btn-filter {{ request('view') == 'card' ? 'active' : '' }}">Tampilan Card</a>
         </div>
     </div>
 
     <!-- Filter Section -->
     <form action="{{ route('barang.index') }}" method="GET" class="mb-4">
         <div class="row g-3">
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-2 col-sm-6">
                 <label for="jenis_barang_id" class="form-label">Jenis Barang:</label>
                 <select name="jenis_barang_id" id="jenis_barang_id" class="form-select">
                     <option value="">Semua Jenis Barang</option>
@@ -36,7 +35,7 @@
                 </select>
             </div>
             <div class="col-md-2 col-sm-6 align-self-end">
-                <button type="submit" class="btn btn-primary w-100">Filter</button>
+                <button type="submit" class="btn btn-primary w-50">Filter</button>
             </div>
         </div>
     </form>
@@ -92,7 +91,7 @@
                         <td>{{ $barang->jenisBarang->nama_jenis }}</td>
                         <td>{{ $barang->user->username ?? 'Tidak Ada Pengguna' }}</td>
                         <td>
-                            <a href="{{ route('barang.edit', $barang) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                            <a href="{{ route('barang.edit', $barang) }}" class="btn btn-info btn-sm">Edit</a>
                             <form action="{{ route('barang.destroy', $barang) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
@@ -109,7 +108,7 @@
     <nav aria-label="Page navigation example" class="pagination-container">
         <ul class="pagination">
             <li class="page-item {{ $barangs->onFirstPage() ? 'disabled' : '' }}">
-                <a class="page-link" href="{{ $barangs->appends(['view' => request('view')])->previousPageUrl() }}">Before</a>
+                <a class="page-link" href="{{ $barangs->appends(['view' => request('view')])->previousPageUrl() }}">Prev</a>
             </li>
             @for ($i = 1; $i <= $barangs->lastPage(); $i++)
                 <li class="page-item {{ $i == $barangs->currentPage() ? 'active' : '' }}">

@@ -11,37 +11,40 @@
     <!-- Card for Product Detail -->
     <div class="card shadow border-0 rounded">
         <div class="card-body">
-            <!-- Main Image -->
-            @if($laporan->fotoKerusakans->count())
-                <div class="position-relative mb-4">
-                    <img src="{{ asset('storage/' . $laporan->fotoKerusakans->first()->path) }}" class="img-fluid rounded-top" style="height: 300px; object-fit: cover;" alt="Foto Kerusakan"/>
-                    <div class="position-absolute top-0 start-0 p-3 bg-dark bg-opacity-50 text-white rounded-end">
-                        <h5 class="card-title fs-4 mb-1">{{ $laporan->nama_laptop }}</h5>
-                        <p class="card-text mb-0">{{ ucfirst($laporan->jenis_kerusakan) }}</p>
-                    </div>
-                </div>
-            @else
-                <p class="text-center text-muted">Tidak ada foto kerusakan tersedia.</p>
-            @endif
-
-            <!-- Detail Laporan and Form in Two Columns -->
             <div class="row">
-                <!-- Detail Laporan Column -->
+                <!-- Main Image Column -->
                 <div class="col-md-6 mb-4">
-                    <dl class="row">
-                        <dt class="col-sm-4 text-muted">Nama Laptop:</dt>
-                        <dd class="col-sm-8">{{ $laporan->nama_laptop }}</dd>
-                        <dt class="col-sm-4 text-muted">Barcode:</dt>
-                        <dd class="col-sm-8">{{ $laporan->barcode }}</dd>
-                        <dt class="col-sm-4 text-muted">Jenis Kerusakan:</dt>
-                        <dd class="col-sm-8">{{ ucfirst($laporan->jenis_kerusakan) }}</dd>
-                        <dt class="col-sm-4 text-muted">Deskripsi:</dt>
-                        <dd class="col-sm-8">{{ $laporan->deskripsi }}</dd>
-                    </dl>
+                    @if($laporan->fotoKerusakans->count())
+                        <div class="position-relative">
+                            <img src="{{ asset('storage/' . $laporan->fotoKerusakans->first()->path) }}" class="img-fluid rounded-top" style="height: 300px; object-fit: cover;" alt="Foto Kerusakan"/>
+                            <div class="position-absolute top-0 start-0 p-3 bg-dark bg-opacity-50 text-white rounded-end">
+                                <h5 class="card-title fs-4 mb-1">{{ $laporan->nama_laptop }}</h5>
+                                <p class="card-text mb-0">{{ ucfirst($laporan->jenis_kerusakan) }}</p>
+                            </div>
+                        </div>
+                    @else
+                        <p class="text-center text-muted">Tidak ada foto kerusakan tersedia.</p>
+                    @endif
                 </div>
 
-                <!-- Form Column -->
+                <!-- Detail and Form Column -->
                 <div class="col-md-6">
+                    <!-- Detail Laporan -->
+                    <div class="mb-4">
+                        <h5 class="text-primary">Detail Laporan</h5>
+                        <dl class="row">
+                            <dt class="col-sm-4 text-muted">Nama Laptop:</dt>
+                            <dd class="col-sm-8">{{ $laporan->nama_laptop }}</dd>
+                            <dt class="col-sm-4 text-muted">Barcode:</dt>
+                            <dd class="col-sm-8">{{ $laporan->barcode }}</dd>
+                            <dt class="col-sm-4 text-muted">Jenis Kerusakan:</dt>
+                            <dd class="col-sm-8">{{ ucfirst($laporan->jenis_kerusakan) }}</dd>
+                            <dt class="col-sm-4 text-muted">Deskripsi:</dt>
+                            <dd class="col-sm-8">{{ $laporan->deskripsi }}</dd>
+                        </dl>
+                    </div>
+
+                    <!-- Form Column -->
                     <form action="{{ route('laporan.update', $laporan->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')

@@ -1,0 +1,145 @@
+.heading {
+    font-family: 'Poppins', sans-serif; /* Mengubah font heading */
+    font-weight: 600; /* Menambahkan ketebalan font */
+    color: #333; /* Warna teks heading */
+    font-size: 2.75rem; /* Ukuran font heading */
+    display: inline-block; /* Agar garis memanjang sesuai dengan panjang teks */
+    padding-bottom: 0.5rem; /* Jarak bawah teks ke garis */
+    border-bottom: 4px solid #0b105e; /* Menambahkan garis di bawah heading */
+    margin-bottom: 0.5rem; /* Jarak margin bawah heading */
+    position: relative; /* Agar garis tambahan dapat diposisikan dengan benar */
+    clear: both;
+}
+
+/* Styling untuk garis tambahan di bawah heading */
+.heading::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px; /* Panjang garis */
+    height: 4px; /* Ketebalan garis */
+    background-color: #5A5A5A; /* Warna garis */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); /* Shadow di bawah garis */
+}
+
+/* Styling untuk tabel dengan shadow */
+.table-custom {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #fff; /* Background color untuk tabel */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow pada tabel */
+    border-radius: 8px; /* Rounding pada sudut tabel */
+}
+
+/* Styling untuk header tabel */
+.table-custom th, .table-custom td {
+    border: 1px solid #ddd; /* Border pada sel tabel */
+    text-align: center;
+    padding: 15px; /* Padding pada sel tabel */
+}
+
+/* Styling untuk header tabel */
+.table-custom th {
+    background-color: #04274d; /* Warna biru untuk header tabel */
+    color: #fff; /* Teks header putih */
+    font-weight: bold; /* Menambahkan ketebalan font pada header tabel */
+}
+
+/* Styling untuk baris tabel */
+.table-custom tr:nth-child(even) {
+    background-color: #f2f2f2; /* Warna latar belakang baris genap */
+}
+
+.table-custom tr:hover {
+    background-color: #e9e9e9; /* Warna latar belakang baris saat hover */
+}
+
+/* Styling untuk form filter */
+.filter-form {
+    background-color: #f9f9f9; /* Latar belakang abu-abu muda untuk form filter */
+    padding: 1rem; /* Padding di sekitar form */
+    border-radius: 8px; /* Rounding pada sudut form */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Shadow untuk efek kedalaman */
+    margin-bottom: 1rem; /* Jarak bawah untuk memisahkan form dari elemen lain */
+}
+
+/* Styling untuk label */
+.filter-form label {
+    font-weight: 600; /* Font tebal untuk label */
+    margin-bottom: 0.5rem; /* Jarak bawah label */
+}
+
+/* Styling untuk input dan select di dalam form filter */
+.filter-form input[type="date"],
+.filter-form select {
+    border-radius: 5px; /* Rounding pada sudut input dan select */
+    border: 1px solid #ccc; /* Border abu-abu pada input dan select */
+}
+
+/* Styling untuk tombol filter */
+.filter-form button[type="submit"] {
+    background-color: #0056b3; /* Warna latar belakang tombol filter */
+    border-color: #0056b3; /* Border tombol sesuai warna latar belakang */
+    font-size: 0.875rem; /* Ukuran font pada tombol */
+    padding: 0.5rem 1rem; /* Padding di sekitar teks tombol */
+    border-radius: 5px; /* Rounding pada sudut tombol */
+    color: #fff; /* Warna teks tombol */
+    transition: background-color 0.3s ease; /* Efek transisi saat hover */
+}
+
+.filter-form button[type="submit"]:hover {
+    background-color: #004494; /* Warna latar belakang tombol saat hover */
+    border-color: #004494; /* Border tombol saat hover */
+}
+
+/* Styling untuk tombol */
+.btn-filter {
+    background-color: #0056b3; /* Warna latar belakang tombol */
+    border-color: #0056b3; /* Border tombol sesuai warna latar belakang */
+    font-size: 0.875rem; /* Ukuran font pada tombol */
+    padding: 0.5rem 1rem; /* Padding di sekitar teks tombol */
+    border-radius: 5px; /* Rounding pada sudut tombol */
+    color: #fff; /* Warna teks tombol */
+    transition: background-color 0.3s ease; /* Efek transisi saat hover */
+    text-decoration: none; /* Menghapus garis bawah pada tombol */
+    display: inline-block; /* Agar tombol dapat diklik */
+}
+
+.btn-filter:hover {
+    background-color: #004494; /* Warna latar belakang tombol saat hover */
+    border-color: #004494; /* Border tombol saat hover */
+}
+
+
+/* Responsivitas untuk layar kecil */
+@media (max-width: 768px) {
+    .table-custom {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .table-custom th, .table-custom td {
+        padding: 10px; /* Mengurangi padding sel tabel pada layar kecil */
+    }
+}
+
+/* Responsivitas untuk layar sangat kecil (ponsel) */
+@media (max-width: 576px) {
+    .table-custom {
+        font-size: 0.75rem; /* Mengurangi ukuran font lebih jauh pada ponsel */
+    }
+
+    .table-custom th, .table-custom td {
+        padding: 8px; /* Mengurangi padding sel tabel lebih lanjut pada ponsel */
+    }
+}
+
+.filter-form input:focus,
+.filter-form select:focus,
+.filter-form button:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
+}
