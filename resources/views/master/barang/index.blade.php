@@ -15,7 +15,7 @@
     <!-- View Toggle Buttons -->
     <div class="mb-4 d-flex justify-content-between align-items-center">
         <div>
-            <a href="{{ route('barang.index', ['view' => 'table']) }}" class="btn btn-primary mb-4 btn-filter {{ request('view') == 'table' ? 'active' : '' }}">Tampilan Tabel</a>
+            <a href="{{ route('barang.index', ['view' => 'table']) }}" class="btn btn-primary mb-4 btn-filter{{ request('view') == 'table' ? 'active' : '' }}">Tampilan Tabel</a>
             <a href="{{ route('barang.index', ['view' => 'card']) }}" class="btn btn-primary mb-4 btn-filter {{ request('view') == 'card' ? 'active' : '' }}">Tampilan Card</a>
         </div>
     </div>

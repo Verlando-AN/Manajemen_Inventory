@@ -40,7 +40,7 @@
                     <p class="card-text"><strong>Deskripsi:</strong> {{ $barang->deskripsi }}</p>
                 </div>
                 <div class="barcode-container">
-                    <p class="card-text"><strong></strong> {!! DNS1D::getBarcodeSVG($barang->barcode, 'C39', 2, 70) !!}</p>
+                    <p class="card-text"><strong></strong> {!! DNS1D::getBarcodeSVG($barang->barcode, 'C39', 0.8, 80) !!}</p>
                 </div>
             </div>
             <div class="button-wrapper">

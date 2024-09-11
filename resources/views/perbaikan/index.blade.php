@@ -1,13 +1,16 @@
 @extends('layout.main')
 
 @section('container')
+<link rel="stylesheet" href="{{ asset('css/barang.css') }}">
 <div class="container mt-4 px-5"> <!-- Menambahkan padding pada container -->
-    <h1 class="mb-4 text-center">Progres Perbaikan</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="heading">Progres Perbaikan</h1>
+    </div>
 
-    <a href="{{ route('laporan.create') }}" class="btn btn-primary mb-4">Tambah Laporan</a>
+    <a href="{{ route('laporan.create') }}" class="btn btn-primary mb-4 btn-filter">Tambah Laporan</a>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-hover align-middle table-custom table-custom-shadow">
             <thead class="table-dark">
                 <tr>
                     <th>Barcode</th>
@@ -30,7 +33,7 @@
                         </td>
                         <td>{{ ucfirst($laporan->status->status ?? $laporan->status) }}</td>
                         <td>
-                            @if($laporan->status_id === 2)  
+                            @if($laporan->status_id === 2 || $laporan->status_id === 3 || $laporan->status_id === 4)
                                 {{ $laporan->estimasi_selesai ? \Carbon\Carbon::parse($laporan->estimasi_selesai)->format('d-m-Y') : '-' }}
                             @else
                                 -
