@@ -11,7 +11,7 @@ class Barang extends Model
 
     protected $fillable = ['jenis_barang_id', 'user_id', 'nama_barang', 'barcode', 'stok', 'deskripsi'];
 
-    public function jenisBarang()
+    public function jenisBarangs()
     {
         return $this->belongsTo(JenisBarang::class);
     }
@@ -20,11 +20,11 @@ class Barang extends Model
     {
         return $this->hasMany(Transaksi::class);
     }
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class);
     }
-    public function laporan()
+    public function laporans()
     {
         return $this->hasMany(Laporan::class);
     }

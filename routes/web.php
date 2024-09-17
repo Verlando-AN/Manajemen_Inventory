@@ -10,6 +10,9 @@ use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PerbaikanController;
 use App\Http\Middleware\RoleMiddleware;
+
+use App\Http\Controllers\WhatsappController;
+
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
@@ -42,3 +45,5 @@ Route::patch('perbaikan/{laporan}/status', [PerbaikanController::class, 'updateS
 
     Route::post('/logout', [LoginController::class, 'logout']);
 
+    Route::post('/', [WhatsAppController::class, 'sendMessage']);
+    

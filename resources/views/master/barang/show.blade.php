@@ -6,6 +6,9 @@
     <p>Jenis: {{ $barang->jenisBarang->nama_jenis }}</p>
     <p>Pengguna: {{ $barang->user->username ?? 'Tidak Ada Pengguna' }}</p>
     <p>Stok: {{ $barang->stok }}</p>
+    
+        {!! DNS1D::getBarcodeSVG($barang->barcode, 'C39', 1, 33) !!}
+    
     <p>Deskripsi: {{ $barang->deskripsi }}</p>
     
     @if($barang->fotoBarangs->count() > 0)

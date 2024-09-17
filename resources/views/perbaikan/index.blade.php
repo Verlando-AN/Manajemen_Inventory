@@ -30,7 +30,7 @@
                         </td>
                         <td>{{ ucfirst($laporan->status->status ?? $laporan->status) }}</td>
                         <td>
-                            @if($laporan->status_id === 2)  
+                            @if($laporan->status_id === 2 || $laporan->status_id === 3 || $laporan->status_id === 4)
                                 {{ $laporan->estimasi_selesai ? \Carbon\Carbon::parse($laporan->estimasi_selesai)->format('d-m-Y') : '-' }}
                             @else
                                 -
