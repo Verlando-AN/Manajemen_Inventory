@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Laporan;
 use App\Models\Barang;
+use App\Models\User;
 use App\Models\Status;
 use App\Models\FotoKerusakan;
 use Illuminate\Http\Request;
@@ -55,13 +56,14 @@ class LaporanController extends Controller
             'deskripsi' => 'nullable',
             'foto_kerusakan.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
+    
         $barang = Barang::where('barcode', $request->barcode)->first();
-
+    
         if (!$barang) {
             return redirect()->back()->withErrors(['error' => 'Barang dengan barcode tersebut tidak ditemukan.']);
         }
-
+    
+        // Buat laporan baru
         $laporan = Laporan::create([
             'barcode' => $request->barcode,
             'nama_laptop' => $barang->nama_barang,
@@ -70,7 +72,8 @@ class LaporanController extends Controller
             'status_id' => 1, 
             'user_id' => Auth::id(), 
         ]);
-
+    
+        // Menyimpan foto kerusakan jika ada
         if ($request->hasFile('foto_kerusakan')) {
             foreach ($request->file('foto_kerusakan') as $file) {
                 $path = $file->store('foto_kerusakan', 'public');
@@ -80,40 +83,65 @@ class LaporanController extends Controller
                 ]);
             }
         }
-
+    
+        // Kirim notifikasi WhatsApp melalui Fonnte API
         $this->sendWhatsAppNotification($laporan);
-
+    
+        // Redirect setelah berhasil
         return redirect()->route('laporan.create')->with('success', 'Laporan berhasil ditambahkan.');
     }
-
+    
     private function sendWhatsAppNotification($laporan)
     {
-        $sid = env('TWILIO_SID');
-        $token = env('TWILIO_AUTH_TOKEN');
-        $twilioNumber = env('TWILIO_WHATSAPP_NUMBER');
-        $adminNumber = env('ADMIN_WHATSAPP_NUMBER');
+        $token = "@Jx9ATNE9hbJFEAM!TL5";
+        $admin = User::where('role', 'admin')->first();
+        $target = $admin->wa;
+    
+        $userName = $laporan->user ? $laporan->user->username : 'Unknown';
 
-        try {
-            $client = new Client($sid, $token);
+        $message = "Laporan baru telah dibuat:\n\n"
+                    . "Dilaporkan oleh: {$userName}\n"
+                    . "Nama barang: {$laporan->nama_laptop}\n"
+                    . "Jenis Kerusakan: {$laporan->jenis_kerusakan}\n"
+                    . "Deskripsi: {$laporan->deskripsi}\n"
+                    . "Barcode: {$laporan->barcode}";
+    
+        $curl = curl_init();
 
-            $message = "Laporan baru telah dibuat:\n\n"
-                        . "Barcode: {$laporan->barcode}\n"
-                        . "Nama barang: {$laporan->nama_laptop}\n"
-                        . "Jenis Kerusakan: {$laporan->jenis_kerusakan}\n"
-                        . "Deskripsi: {$laporan->deskripsi}";
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => http_build_query([
+                'target' => $target,
+                'message' => $message,
+            ]),
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: $token",
+            ),
+        ));
+        
+        $response = curl_exec($curl);
 
-            $client->messages->create(
-                "whatsapp:{$adminNumber}",
-                [
-                    'from' => "whatsapp:{$twilioNumber}",
-                    'body' => $message
-                ]
-            );
-        } catch (\Exception $e) {
-            Log::error('Twilio WhatsApp Error: ' . $e->getMessage());
+        if (curl_errno($curl)) {
+            $error_msg = curl_error($curl);
+            Log::error("Curl error: " . $error_msg);
+        }
+
+        curl_close($curl);
+        
+        if (isset($error_msg)) {
+            Log::error("WhatsApp Notification Error: " . $error_msg);
+        } else {
+            Log::info("WhatsApp Notification Response: " . $response);
         }
     }
-
+    
     public function edit(Laporan $laporan)
     {
         $statuss = Status::all();
@@ -148,6 +176,7 @@ class LaporanController extends Controller
                 ]);
             }
         }
+        $this->sendWhatsApp($laporan);
 
         return redirect()->route('laporan.index')->with('success', 'Laporan berhasil diperbarui.');
     }
@@ -168,14 +197,64 @@ class LaporanController extends Controller
         $fotoKerusakans = $laporan->fotoKerusakans;
         return view('laporan.show', compact('laporan', 'fotoKerusakans'));
     }
-        public function showHome()
+
+    public function showHome()
     {
         $jumlahLaporan = Laporan::count();
         $laporanTerbaru = Laporan::latest()->first();
         $aktivitasTerakhir = Laporan::latest()->first();
 
-    // Mengirim data ke view 'home'
-    return view('home', compact('jumlahLaporan', 'laporanTerbaru', 'aktivitasTerakhir'));
+        // Mengirim data ke view 'home'
+        return view('home', compact('jumlahLaporan', 'laporanTerbaru', 'aktivitasTerakhir'));
     }
+    private function sendWhatsApp($laporan)
+    {
+        $token = "@Jx9ATNE9hbJFEAM!TL5";
+        $user = $laporan->user;
+        $target = $user->wa;
+    
+        $userName = $laporan->user ? $laporan->user->username : 'Unknown';
+        $status = $laporan->status ? $laporan->status->status : 'Unknown';
 
+        $message = "Status Laporan Kamu Diperbarui: {$status}\n\n"
+                    . "Nama barang: {$laporan->nama_laptop}\n"
+                    . "Jenis Kerusakan: {$laporan->jenis_kerusakan}\n"
+                    . "Deskripsi: {$laporan->deskripsi}\n"
+                    . "Barcode: {$laporan->barcode}";
+    
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => http_build_query([
+                'target' => $target,
+                'message' => $message,
+            ]),
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: $token",
+            ),
+        ));
+        
+        $response = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+            $error_msg = curl_error($curl);
+            Log::error("Curl error: " . $error_msg);
+        }
+
+        curl_close($curl);
+        
+        if (isset($error_msg)) {
+            Log::error("WhatsApp Notification Error: " . $error_msg);
+        } else {
+            Log::info("WhatsApp Notification Response: " . $response);
+        }
+    }
 }

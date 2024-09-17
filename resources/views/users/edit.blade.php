@@ -24,6 +24,14 @@
             @enderror
         </div>
 
+        <div class="form-group">
+            <label for="wa">Nomer Whatsapp (Gunakan 62)</label>
+            <input type="wa" id="wa" name="wa" class="form-control" value="{{ old('wa', $user->wa) }}" required>
+            @error('wa')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
       
 
         <div class="form-group">

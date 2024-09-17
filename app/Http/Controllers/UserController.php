@@ -26,35 +26,30 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        // Validasi data dari request
         $request->validate([
             'username' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8|max:255',
+            'wa' => 'nullable|string|max:255',
+            'password' => 'nullable|string|min:8|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        // Proses upload foto jika ada
+    
         if ($request->hasFile('photo')) {
-            // Hapus foto lama jika ada
             if ($user->photo) {
                 Storage::disk('public')->delete($user->photo);
             }
-
-            // Simpan foto baru dan update path-nya
             $photoPath = $request->file('photo')->store('profile-photos', 'public');
             $user->photo = $photoPath; 
         }
-
-        // Ambil data lainnya dari request
-        $userData = $request->only('username', 'email');
-        
-        // Update password jika diisi
+    
+        $userData = $request->only('username', 'email', 'wa');
+    
         if ($request->filled('password')) {
             $userData['password'] = Hash::make($request->input('password'));
         }
-
+    
         $user->update($userData);
+    
         return redirect()->route('users.index')->with('success', 'Pengguna berhasil diperbarui.');
     }
 
@@ -64,7 +59,6 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('error', 'Anda tidak memiliki izin untuk menghapus pengguna ini.');
         }
 
-        // Hapus foto jika ada
         if ($user->photo) {
             Storage::disk('public')->delete($user->photo);
         }
