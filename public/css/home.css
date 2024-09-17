@@ -43,7 +43,8 @@
 
 /* Overview Section Styles */
 .overview-section {
-    background-color: #e3f2fd; /* Light blue background */
+    color: #ffffff;
+    background-color: #04274d; /* Light blue background */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -60,12 +61,14 @@
 
 /* Features Section Styles */
 .features-section {
-    background-color: #e3f2fd; /* Light blue background */
+    color: #ffffff;
+    background-color: #04274d; /* Light blue background */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .feature-card {
+    color: #000000;
     background: #ffffff;
     border-radius: 8px;
     padding: 20px;

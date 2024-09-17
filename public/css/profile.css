@@ -1,0 +1,145 @@
+.heading {
+    font-family: 'Poppins', sans-serif; /* Mengubah font heading */
+    font-weight: 600; /* Menambahkan ketebalan font */
+    color: #333; /* Warna teks heading */
+    font-size: 2.rem; /* Ukuran font heading */
+    display: inline-block; /* Agar garis memanjang sesuai dengan panjang teks */
+    padding-bottom: 0.5rem; /* Jarak bawah teks ke garis */
+    border-bottom: 4px solid #0b105e; /* Menambahkan garis di bawah heading */
+    margin-bottom: 0.5rem; /* Jarak margin bawah heading */
+    position: relative; /* Agar garis tambahan dapat diposisikan dengan benar */
+}
+
+/* Styling untuk garis tambahan di bawah heading */
+.heading::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px; /* Panjang garis */
+    height: 4px; /* Ketebalan garis */
+    background-color: #5A5A5A; /* Warna garis */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); /* Shadow di bawah garis */
+}
+.container {
+    margin-top: 2rem;
+  }
+  .profile-photo {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%; 
+    margin-top: 25px;
+    } 
+
+  /* Profile card styling */
+  .card {
+    border-radius: 0.75rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card img {
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 0.75rem 0.75rem 0 0;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .card-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+  
+  .card-textt{
+    margin-left: 40%;
+    font-size: small;
+    color: rgb(63, 204, 247);
+    background-color: #0057b32f;
+    width: 20%;
+    border-radius: 12px;
+  }
+  
+  /* Table styling */
+  .table {
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+  
+  .table thead {
+    background-color: #e9ecef;
+  }
+  
+  .table th {
+    font-weight: 600;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .table-responsive {
+    border-radius: 0.75rem;
+  }
+  
+  /* Button styling */
+  .btn {
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .btn-outline-warning {
+    border-color: #ffc107;
+    margin-bottom: 12px;
+  }
+  
+  .btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  
+  .btn-outline-danger {
+    border-color: #dc3545;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  /* Alert styling */
+  .alert {
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .alert-dismissible .btn-close {
+    filter: brightness(0.8);
+  }
+  
+  .alert-dismissible .btn-close:hover {
+    filter: brightness(1);
+  }
+  
