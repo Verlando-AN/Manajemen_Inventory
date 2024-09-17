@@ -1,9 +1,10 @@
 @extends('layout.main')
 
 @section('container')
+<link rel="stylesheet" href="{{ asset('css/barang.css') }}">
 <div class="container mt-4">
-    <div class="text-center mb-4">
-        <h1>Profile dan Barangmu</h1>
+    <div class="text-left mb-4">
+        <h1 class=heading>Profile dan Barangmu</h1>
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 {{ session('success') }}
@@ -13,17 +14,17 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 mb-3">
             <div class="card shadow-sm border-light">
                 <div class="row g-0">
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         @if (auth()->user()->photo)
                       <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="User Image" class="img-fluid rounded-start" style="height: 200px; object-fit: cover;">
                       @else
                       <img src="{{ Storage::url('public/img/profile.jpg') }}" class="img-fluid rounded-top" alt="Profile Image" style="height: 250px; object-fit: cover;">
                       @endif
                      </div>
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <div class="card-body">
                             <h5 class="card-title">Profile</h5>
                             <p class="card-text"><strong>Username:</strong> {{ auth()->user()->username }}</p>

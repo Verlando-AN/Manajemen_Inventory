@@ -1,0 +1,189 @@
+ /* Styling untuk heading */
+ .heading {
+    font-family: 'Poppins', sans-serif; /* Mengubah font heading */
+    font-weight: 600; /* Menambahkan ketebalan font */
+    color: #333; /* Warna teks heading */
+    font-size: 2.75rem; /* Ukuran font heading */
+    display: inline-block; /* Agar garis memanjang sesuai dengan panjang teks */
+    padding-bottom: 0.5rem; /* Jarak bawah teks ke garis */
+    border-bottom: 4px solid #0b105e; /* Menambahkan garis di bawah heading */
+    margin-bottom: 0.5rem; /* Jarak margin bawah heading */
+    position: relative; /* Agar garis tambahan dapat diposisikan dengan benar */
+}
+
+/* Styling untuk garis tambahan di bawah heading */
+.heading::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px; /* Panjang garis */
+    height: 4px; /* Ketebalan garis */
+    background-color: #5A5A5A; /* Warna garis */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); /* Shadow di bawah garis */
+}
+
+/* Styling untuk card */
+.card-custom {
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid #ddd; /* Border pada card */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow pada card */
+    border-radius: 8px; /* Rounding pada sudut card */
+}
+
+/* Styling untuk gambar di dalam card */
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd; /* Border di antara gambar dan body card */
+}
+
+/* Styling untuk tabel dengan shadow */
+.table-custom {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.table-custom th, .table-custom td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 15px;
+}
+
+.table-custom th {
+    background-color: #04274d; /* Warna biru untuk header tabel */
+    color: #fff; /* Teks header putih */
+}
+
+/* Styling untuk tabel dengan shadow */
+.table-custom-shadow {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 8px; /* Rounding pada sudut tabel */
+}
+
+/* Pastikan border-radius diterapkan pada elemen pembungkus tabel */
+.table-responsive {
+    border-radius: 8px; /* Rounding pada sudut pembungkus tabel */
+    overflow: hidden; /* Untuk memastikan sudut melengkung terlihat */
+}
+/* Ikon check dan times */
+.fa-check {
+    color: #4CAF50;
+}
+
+.fa-times {
+    color: #f44336;
+}
+
+/* Styling untuk tombol */
+.butonn, .butond {
+    border-radius: 5px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Warna tombol .butonn */
+.butonn {
+    background-color: rgb(5, 21, 44);
+    color: rgb(255, 255, 255);
+}
+
+/* Warna tombol .butond */
+.butond {
+    background-color: rgb(255, 255, 255);
+    color: #020202;
+    border: 2px solid #020202; /* Menambahkan border pada tombol */
+}
+
+/* Efek hover pada tombol */
+.butonn:hover, .butond:hover {
+    opacity: 0.8;
+}
+
+/* Penataan tombol dalam card */
+.card-body .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+/* Responsivitas untuk layar kecil (tablet) */
+@media (max-width: 768px) {
+    .card-custom {
+        max-width: 100%;
+    }
+
+    .card-img-top {
+        height: 150px;
+    }
+
+    .butonn, .butond {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .table-custom {
+        font-size: 0.75rem;
+    }
+}
+
+/* Responsivitas untuk layar sangat kecil (ponsel) */
+@media (max-width: 576px) {
+    .card-custom {
+        max-width: 100%;
+    }
+
+    .card-img-top {
+        height: 100px;
+    }
+
+    .butonn, .butond {
+        font-size: 0.875rem;
+        height: 25px;
+    }
+
+    .table-custom {
+        font-size: 0.7rem;
+    }
+}
+
+/* Menambahkan shadow pada pagination dan menempatkan di tengah */
+.pagination-container {
+    display: flex;
+    justify-content: center; /* Menempatkan pagination di tengah */
+    margin-top: 1rem; /* Jarak dari elemen atas */
+}
+
+.pagination {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow pada pagination */
+    border-radius: 8px; /* Tambahkan rounding pada sudut pagination untuk efek yang lebih halus */
+    padding: 0.5rem; /* Tambahkan padding agar pagination terlihat lebih rapi */
+    background-color: #fff; /* Background color untuk memperjelas shadow */
+}
+
+.page-item {
+    margin: 0 2px; /* Jarak antar tombol */
+}
+
+.page-item.active .page-link {
+    background-color: #007bff; /* Warna latar belakang tombol aktif */
+    color: #fff; /* Warna teks tombol aktif */
+}
+
+.page-link {
+    border-radius: 5px; /* Rounding pada tombol */
+    transition: background-color 0.3s ease; /* Efek transisi saat hover */
+}
+
+.page-link:hover {
+    background-color: #f0f0f0; /* Warna latar belakang saat hover */
+}

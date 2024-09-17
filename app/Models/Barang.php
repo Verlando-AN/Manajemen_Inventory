@@ -11,23 +11,27 @@ class Barang extends Model
 
     protected $fillable = ['jenis_barang_id', 'user_id', 'nama_barang', 'barcode', 'stok', 'deskripsi'];
 
-    public function jenisBarangs()
+    // Mengubah nama relasi menjadi bentuk tunggal
+    public function jenisBarang()
     {
-        return $this->belongsTo(JenisBarang::class);
+        return $this->belongsTo(JenisBarang::class); // belongsTo harus bentuk tunggal
     }
 
     public function transaksis()
     {
         return $this->hasMany(Transaksi::class);
     }
-    public function users()
+
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class); // Nama metode disarankan tunggal
     }
+
     public function laporans()
     {
         return $this->hasMany(Laporan::class);
     }
+
     public function fotobarangs()
     {
         return $this->hasMany(FotoBarang::class, 'barang_id'); 

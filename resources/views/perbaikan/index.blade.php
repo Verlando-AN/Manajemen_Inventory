@@ -1,13 +1,16 @@
 @extends('layout.main')
 
 @section('container')
-<div class="container mt-4">
-    <h1 class="mb-4 text-center">Progres Perbaikan</h1>
+<link rel="stylesheet" href="{{ asset('css/barang.css') }}">
+<div class="container mt-4 px-5"> <!-- Menambahkan padding pada container -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="heading">Progres Perbaikan</h1>
+    </div>
 
-    <a href="{{ route('laporan.create') }}" class="btn btn-primary mb-4">Tambah Laporan</a>
+    <a href="{{ route('laporan.create') }}" class="btn btn-primary mb-4 btn-filter">Tambah Laporan</a>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-hover align-middle table-custom table-custom-shadow">
             <thead class="table-dark">
                 <tr>
                     <th>Barcode</th>
@@ -50,7 +53,7 @@
                                 </button>
 
                                 <button 
-                                    class="btn btn-success {{ $laporan->status_id == 4 ? '' : 'disabled' }}" 
+                                    class="btn btn-success {{ $laporan->status_id == 4 ? '' : 'disabled' }} ms-2" 
                                     type="button"
                                     data-bs-toggle="modal" data-bs-target="#actionModal" 
                                     data-action="accept"
@@ -87,4 +90,39 @@
   </div>
 </div>
 
+<!-- Script to change modal content based on action -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('actionModal');
+        const modalMessage = modal.querySelector('#modalMessage');
+        const confirmActionBtn = modal.querySelector('#confirmActionBtn');
+
+        modal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const action = button.getAttribute('data-action');
+
+            if (action === 'generate') {
+                modalMessage.textContent = 'Apakah Anda yakin ingin Generate Laporan ini?';
+                confirmActionBtn.textContent = 'Generate';
+            } else if (action === 'accept') {
+                modalMessage.textContent = 'Apakah Anda yakin ingin Accept Laporan ini?';
+                confirmActionBtn.textContent = 'Accept';
+            }
+        });
+    });
+</script>
+
 @endsection
+
+<!-- Custom CSS -->
+<style>
+    /* Add hover effect to links */
+    a.text-decoration-none:hover {
+        text-decoration: underline;
+    }
+
+    /* Add more spacing between buttons */
+    .ms-2 {
+        margin-left: 0.5rem;
+    }
+</style>
