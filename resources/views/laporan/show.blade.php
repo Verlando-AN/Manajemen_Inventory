@@ -10,7 +10,13 @@
             <p class="card-text">Nama Laptop: {{ $laporan->nama_laptop }}</p>
             <p class="card-text">Jenis Kerusakan: {{ $laporan->jenis_kerusakan }}</p>
             <p class="card-text">Deskripsi: {{ $laporan->deskripsi }}</p>
+            <p class="card-text">Teknisi: {{ $laporan->teknisi }}</p>
             <p>Status : {{ ucfirst($laporan->status->status ?? $laporan->status) }}</p>
+            <p class="card-text">Estimasi Biaya: @if($laporan->status_id === 2)  
+                {{ $laporan->estimasi_biaya }}
+            @else
+                -
+            @endif
             <p class="card-text">Estimasi Selesai: @if($laporan->status_id === 2)  
                 {{ $laporan->estimasi_selesai ? \Carbon\Carbon::parse($laporan->estimasi_selesai)->format('d-m-Y') : '-' }}
             @else

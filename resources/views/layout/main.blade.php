@@ -12,10 +12,9 @@
 
     <style>
         body {
-            background-color: #e9ecef; /* Warna latar belakang yang Anda inginkan */
+            background-color: #e9ecef;
         }
     
-        /* CSS lainnya */
         .sidebar {
             height: 100vh; 
             position: fixed; 

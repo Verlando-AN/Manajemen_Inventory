@@ -2,13 +2,9 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!-- Desktop Sidebar -->
         <nav class="col-lg-3 col-xl-2 d-none d-lg-block bg-dark text-white sidebar">
             <div class="position-sticky">
-                <!-- Profile Section -->
-                 <!-- Profile Section -->
                  <a href="{{ route('users.index') }}" class="profile-section d-flex align-items-center p-3 text-white text-decoration-none">
-                    <!-- Gambar Profil -->
                     <img src="{{ Auth::user()->photo ? Storage::url(Auth::user()->photo) : asset('img/profile.jpg') }}" alt="Profile Picture" class="profile-picture me-3">
                     <div>
                         <h5 class="profile-name">{{ Auth::user()->username }}</h5>
@@ -16,7 +12,6 @@
                     </div>
                 </a>
 
-                <!-- Navigation Menu -->
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('home') }}">Home</a>
@@ -25,6 +20,8 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('barang.index') }}">Barang</a>
                     </li>
+                    @endif
+                    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'teknisi')
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('laporan.index') }}">Laporan</a>
                     </li>
@@ -42,7 +39,6 @@
             </div>
         </nav>
 
-        <!-- Mobile Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none" data-bs-theme="dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Manajemen Inventory</a>
@@ -55,24 +51,23 @@
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body bg-dark text-white">
-                        <!-- Profile Section -->
                         <div class="profile-section d-flex align-items-center p-3">
-                            <!-- Gambar Profil -->
                             <img src="{{ Auth::user()->photo ? Storage::url(Auth::user()->photo) : asset('img/default-profile.png') }}" alt="Profile Picture" class="profile-picture me-3">
                             <div>
                                 <h5 class="profile-name">{{ Auth::user()->username }}</h5>
                                 <p class="profile-role">{{ Auth::user()->role }}</p>
                             </div>
                         </div>
-                        <!-- Navigation Menu -->
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('home') }}">Home</a>
                             </li>
+                            @if(auth()->user()->role === 'admin')
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('barang.index') }}">Barang</a>
                             </li>
-                            @if(auth()->user()->role === 'admin')
+                            @endif
+                            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'teknisi')
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('laporan.index') }}">Laporan</a>
                             </li>

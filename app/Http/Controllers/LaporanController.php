@@ -17,7 +17,7 @@ class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (Auth::user()->role !== 'admin' && Auth::user()->role !== 'teknisi') {
             return redirect('/')->with('error', 'Anda tidak memiliki akses ke bagian ini.');
         }
     
@@ -38,6 +38,7 @@ class LaporanController extends Controller
         }
 
         $laporans = $query->get();
+        $laporans = $query->paginate(10);
 
         return view('laporan.index', compact('laporans'));
     }
@@ -147,26 +148,44 @@ class LaporanController extends Controller
         $statuss = Status::all();
         return view('laporan.edit', compact('laporan', 'statuss'));
     }
-
+    
     public function update(Request $request, Laporan $laporan)
     {
-        if (Auth::user()->role !== 'admin' && $laporan->user_id !== Auth::id()) {
+        if (Auth::user()->role !== 'admin' && Auth::user()->role !== 'teknisi' && $laporan->user_id !== Auth::user()->id) {
             return redirect()->route('laporan.index')->withErrors(['error' => 'Anda tidak memiliki izin untuk memperbarui laporan ini.']);
         }
-
+        
+        // Validasi input
         $request->validate([
-            'status_id' => 'required|integer|exists:statuss,id',
+            'status_id' => 'nullable|integer|exists:statuss,id',
             'estimasi_selesai' => 'nullable|date',
+            'estimasi_biaya' => 'nullable',
+            'teknisi' => 'nullable',
         ]);
+    
+        // Ambil data dari request
+        $data = $request->only('status_id', 'estimasi_selesai', 'estimasi_biaya', 'teknisi');
+    
+        // Cek apakah tombol "Terima" ditekan, ubah status_id ke 2
 
-        $data = $request->only('status_id', 'estimasi_selesai');
-
-        if ($data['estimasi_selesai']) {
-            $data['estimasi_selesai'] = Carbon::parse($data['estimasi_selesai'])->format('Y-m-d');
+        if ($request->has('terimateknisi')) {
+            $data['status_id'] = 2; 
         }
 
-        $laporan->update($data);
+        if ($request->has('terima')) {
+            $data['status_id'] = 3; 
+        }
 
+        if ($request->has('generate')) {
+            $data['status_id'] = 4; 
+        }
+    
+        if ($request->has('selesai')) {
+            $data['status_id'] = 4; 
+        }
+    
+        $laporan->update($data);
+    
         if ($request->hasFile('foto_kerusakan')) {
             foreach ($request->file('foto_kerusakan') as $file) {
                 $path = $file->store('foto_kerusakan', 'public');
@@ -176,11 +195,12 @@ class LaporanController extends Controller
                 ]);
             }
         }
+    
         $this->sendWhatsApp($laporan);
-
+    
         return redirect()->route('laporan.index')->with('success', 'Laporan berhasil diperbarui.');
     }
-
+    
     public function destroy(Laporan $laporan)
     {
         if (Auth::user()->role !== 'admin' && $laporan->user_id !== Auth::id()) {
@@ -204,7 +224,6 @@ class LaporanController extends Controller
         $laporanTerbaru = Laporan::latest()->first();
         $aktivitasTerakhir = Laporan::latest()->first();
 
-        // Mengirim data ke view 'home'
         return view('home', compact('jumlahLaporan', 'laporanTerbaru', 'aktivitasTerakhir'));
     }
     private function sendWhatsApp($laporan)
@@ -213,7 +232,6 @@ class LaporanController extends Controller
         $user = $laporan->user;
         $target = $user->wa;
     
-        $userName = $laporan->user ? $laporan->user->username : 'Unknown';
         $status = $laporan->status ? $laporan->status->status : 'Unknown';
 
         $message = "Status Laporan Kamu Diperbarui: {$status}\n\n"

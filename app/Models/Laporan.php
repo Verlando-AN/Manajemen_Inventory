@@ -15,7 +15,9 @@ class Laporan extends Model
         'jenis_kerusakan',
         'deskripsi',
         'status_id',
+        'teknisi',
         'estimasi_selesai',
+        'estimasi_biaya',
         'user_id',
     ];
 

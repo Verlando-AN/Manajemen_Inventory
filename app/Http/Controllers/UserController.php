@@ -55,9 +55,6 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if (Auth::user()->cannot('delete', $user)) {
-            return redirect()->route('users.index')->with('error', 'Anda tidak memiliki izin untuk menghapus pengguna ini.');
-        }
 
         if ($user->photo) {
             Storage::disk('public')->delete($user->photo);

@@ -2,7 +2,6 @@
 
 @section('container')
 <link rel="stylesheet" href="{{ asset('css/laporan.css') }}">
-<!-- Tambahkan Flatpickr CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 <div class="container mt-4">
@@ -17,7 +16,9 @@
         </div>
     @endif
 
+    @if(auth()->user()->role === 'admin')
     <a href="{{ route('laporan.create') }}" class="btn btn-primary mb-4 btn-filter">Tambah Laporan</a>
+    @endif
 
     <form action="{{ route('laporan.index') }}" method="GET" class="filter-form">
         <div class="row">
@@ -55,7 +56,6 @@
         <button type="submit" class="btn btn-primary mt-2">
             <i class="fa fa-filter"></i> Filter
         </button>
-        <!-- Preset Tanggal Umum -->
         <div class="mt-3">
             <button type="button" class="btn btn-secondary btn-sm" onclick="setPreset('today')">Hari Ini</button>
             <button type="button" class="btn btn-secondary btn-sm" onclick="setPreset('last7days')">7 Hari Terakhir</button>
@@ -66,17 +66,14 @@
     
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        // Initialize date pickers
         flatpickr(".datepicker", {
             dateFormat: "Y-m-d"
         });
 
-        // Initialize tooltips
         document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (element) {
             new bootstrap.Tooltip(element);
         });
 
-        // Preset tanggal umum
         function setPreset(preset) {
             let startDate, endDate;
             if (preset === 'today') {
@@ -119,12 +116,17 @@
                         <td>{{ ucfirst($laporan->jenis_kerusakan) }}</td>
                         <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
                         <td>
+                            @if(auth()->user()->role === 'teknisi')
+                            <a href="{{ route('laporan.edit', $laporan->id) }}" class="btn btn-info btn-sm">Terima</a>
+                            @endif
+                            @if(auth()->user()->role === 'admin')
                             <a href="{{ route('laporan.edit', $laporan->id) }}" class="btn btn-info btn-sm">Edit</a>
                             <form action="{{ route('laporan.destroy', $laporan->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus laporan ini?')">Hapus</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -132,24 +134,19 @@
         </table>
     </div>
     
-    <div class="pagination-container">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item disabled">
-                    <a class="page-link" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
+    <nav aria-label="Page navigation example" class="pagination-container">
+        <ul class="pagination">
+            <li class="page-item {{ $laporans->onFirstPage() ? 'disabled' : '' }}">
+                <a class="page-link" href="{{ $laporans->appends(['view' => request('view')])->previousPageUrl() }}">Prev</a>
+            </li>
+            @for ($i = 1; $i <= $laporans->lastPage(); $i++)
+                <li class="page-item {{ $i == $laporans->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $laporans->appends(['view' => request('view')])->url($i) }}">{{ $i }}</a>
+                @endfor
+                <li class="page-item {{ $laporans->hasMorePages() ? '' : 'disabled' }}">
+                    <a class="page-link" href="{{ $laporans->appends(['view' => request('view')])->nextPageUrl() }}">Next</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+        </ul>
+    </nav>
 </div>
 @endsection

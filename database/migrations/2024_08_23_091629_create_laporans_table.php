@@ -13,8 +13,10 @@ class CreateLaporansTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('barcode');
             $table->string('nama_laptop');
-            $table->enum('jenis_kerusakan', ['normal', 'sedang', 'parah']);   
+            $table->enum('jenis_kerusakan', ['normal', 'sedang', 'parah']);
+            $table->string('teknisi')->nullable();    
             $table->date('estimasi_selesai')->nullable(); 
+            $table->string('estimasi_biaya')->nullable(); 
             $table->foreignId('status_id')->default(1)->constrained('statuss')->onDelete('cascade');   
             $table->text('deskripsi')->nullable();
             $table->timestamps(); 
